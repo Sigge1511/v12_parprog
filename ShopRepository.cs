@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace v12_parprog
 {
-    class ShopRepository
+    internal class ShopRepository
     {
-
+        internal ShopCntxt dbctx = new ShopCntxt();
 
 
     }

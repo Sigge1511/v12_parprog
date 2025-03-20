@@ -6,7 +6,8 @@ namespace v12_parprog
     {
         static void Main(string[] args)
         {
-            
+            var consolemanager = new ConsoleManager();
+            consolemanager.Run();
 
             //var tandkräm = new Product();
             //tandkräm.ProductName = "Tandkräm";
