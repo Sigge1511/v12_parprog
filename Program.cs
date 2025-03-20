@@ -6,7 +6,7 @@ namespace v12_parprog
     {
         static void Main(string[] args)
         {
-            var dbctx = new ShopCntxt();
+            
 
             //var tandkräm = new Product();
             //tandkräm.ProductName = "Tandkräm";
@@ -47,14 +47,47 @@ namespace v12_parprog
             //dbctx.Add(row3);
             //dbctx.SaveChanges();
 
-            foreach (var c in dbctx.Customers) 
-            {
-                Console.WriteLine($"Kundnamn: {c.Name}");
-                foreach (var o in dbctx.Orders) 
-                {
-                    Console.WriteLine($"ID: {o.OrderId}, totalpris {o.TotalPrice}");
-                }
-            }
+
+            //Denna bråkar då kan inte kan nestla loopar på detta sätt,
+            //readern vill bara göra en sak från databasen åt gången och inte be om något nytt mitt i en foreachloop 
+            //foreach (var c in dbctx.Customers
+            //    .Include(c => c.Orders)
+            //    .ThenInclude(c=>c.OrderRows))
+            //{
+            //    Console.WriteLine($"Kundnamn: {c.Name}");
+            //    foreach (var o in dbctx.Orders) 
+            //    {
+            //        Console.WriteLine($"  Ordernummer: {o.OrderId}, totalpris {o.TotalPrice}");
+
+            //        foreach (var p in dbctx.OrderRows) 
+            //        {
+            //            Console.WriteLine(p.Product.ProductName);
+            //        }
+            //    }
+            //}
+
+
+            //Genom att lägga till ToList() efter min db query så sparas det
+            //lokalt i minnet och jag kan nestla loopar med frågor - YAY!
+            //foreach (var c in dbctx.Customers
+            //    .Include(c => c.Orders)
+            //    .ThenInclude(c => c.OrderRows)
+            //    .ThenInclude(c=>c.Product)
+            //    .ToList())
+            //{
+            //    Console.WriteLine($"Kundnamn: {c.Name}");
+
+            //    //loopa inte igenom context, nestlad loop använder lilla lokala variablen, tex "c"
+            //    foreach (var o in c.Orders.ToList())
+            //    {
+            //        Console.WriteLine($"  Ordernummer: {o.OrderId}\nTotalpris {o.TotalPrice} kronor.");
+            //        Console.WriteLine("\nVaror:");
+            //        foreach (var p in o.OrderRows) 
+            //        {
+            //            Console.WriteLine(p.Product.ProductName);
+            //        }
+            //    }
+            //}
 
 
 
